@@ -6,12 +6,19 @@ from code.clac_add import add
 
 
 def get_data():
-    with open("../test_data/add.yml", encoding='utf-8') as f:
+    with open("./test_data/add.yml", encoding='utf-8') as f:
         data = yaml.safe_load(f)
     return data
 
 
 class TestAdd:
+
+    def setup(self):
+        print("开始计算")
+
+    def teardown(self):
+        print("结束计算")
+
     @pytest.mark.skip
     def test_get_data(self):
         print(get_data()["success"]["ids"])
