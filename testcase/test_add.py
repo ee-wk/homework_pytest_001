@@ -2,7 +2,7 @@
 import pytest
 import yaml
 
-from code.clac_add import add
+
 
 
 def get_data():
@@ -24,13 +24,13 @@ class TestAdd:
         print(get_data()["success"]["ids"])
 
     @pytest.mark.parametrize("expect,a,b", get_data()["success"]["data"], ids=get_data()["success"]["ids"])
-    def test_add_success(self, expect, a, b):
-        assert expect == add(a, b)
+    def test_add_success(self, get_calc_object, expect, a, b):
+        assert expect == get_calc_object.add(a, b)
 
     @pytest.mark.parametrize("expect,a,b", get_data()["others"]["data"], ids=get_data()["others"]["ids"])
-    def test_add_others(self, expect, a, b):
+    def test_add_others(self, get_calc_object, expect, a, b):
         try:
-            add(a, b)
+            get_calc_object.add(a, b)
             raise Exception("没有提示输入数字")
         except Exception as e:
             assert expect in str(e)
