@@ -1,4 +1,5 @@
 from typing import List
+import logging
 
 import pytest
 
@@ -14,10 +15,10 @@ from code.calculator import Calculator
 # 获取 计算器实例的fixture
 @pytest.fixture(scope='class')
 def get_calc_object():
-    print("开始计算")
+    logging.info("开始计算")
     calc = Calculator()
     yield calc
-    print("结束计算")
+    logging.info("结束计算")
 
 
 # # 获取 测试数据
