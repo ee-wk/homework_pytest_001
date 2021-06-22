@@ -1,4 +1,7 @@
 # coding=utf-8
+import logging
+
+import allure
 import pytest
 import yaml
 
@@ -8,15 +11,20 @@ def get_data():
         data = yaml.safe_load(f)
     return data
 
-
+@allure.feature("除法运算测试类")
 class TestDiv:
-
-    @pytest.mark.parametrize("expect,a,b", get_data()["success"]["data"], ids=get_data()["success"]["ids"])
-    def test_div_success(self, get_calc_object, expect, a, b):
+    @allure.story("除法运算正常场景")
+    @pytest.mark.parametrize("expect,a,b,title", get_data()["success"]["data"], ids=get_data()["success"]["ids"])
+    def test_div_success(self, get_calc_object, expect, a, b, title):
+        allure.dynamic.title(title)
+        logging.info(f"执行用例：{a}/{b}，预期：{expect}")
         assert expect == get_calc_object.div(a, b)
 
-    @pytest.mark.parametrize("expect,a,b", get_data()["others"]["data"], ids=get_data()["others"]["ids"])
-    def test_div_others(self, get_calc_object, expect, a, b):
+    @allure.story("出发运算异常场景")
+    @pytest.mark.parametrize("expect,a,b,title", get_data()["others"]["data"], ids=get_data()["others"]["ids"])
+    def test_div_others(self, get_calc_object, expect, a, b, title):
+        allure.dynamic.title(title)
+        logging.info(f"执行用例：{a}/{b}，预期：{expect}")
         try:
             get_calc_object.div(a, b)
             raise Exception("没有提示输入数字")
